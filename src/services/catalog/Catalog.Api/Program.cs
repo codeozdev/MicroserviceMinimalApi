@@ -1,4 +1,5 @@
 using Catalog.Api.Options;
+using Catalog.Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// mongoDb baðlantý ayarlarý
+// mongodb baðlantý ayarlarý
 builder.Services.AddOptionsExt();
+builder.Services.AddRepositoriesExt();
+
 
 var app = builder.Build();
 
