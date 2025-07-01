@@ -1,3 +1,4 @@
+using Catalog.Api.Features.Categories;
 using Catalog.Api.Options;
 using Catalog.Api.Repositories;
 
@@ -13,6 +14,9 @@ builder.Services.AddRepositoriesExt();
 
 
 var app = builder.Build();
+
+// Group endpoints
+app.AddCategoryGroupEndpointExt();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
