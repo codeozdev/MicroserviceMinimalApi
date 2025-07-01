@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Shared.Extensions;
+using Shared.Filters;
 
 namespace Catalog.Api.Features.Categories.Create;
 
@@ -12,7 +13,7 @@ public static class CreateCategoryEndpoint
         {
             var result = await mediator.Send(command);
             return result.ToGenericResult();
-        });
+        }).AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
 
 
         return group;
