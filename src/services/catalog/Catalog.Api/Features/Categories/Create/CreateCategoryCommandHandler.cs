@@ -1,4 +1,5 @@
-﻿using Catalog.Api.Repositories;
+﻿using AutoMapper;
+using Catalog.Api.Repositories;
 using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using System.Net;
 
 namespace Catalog.Api.Features.Categories.Create;
 
-public class CreateCategoryCommandHandler(AppDbContext context) : IRequestHandler<CreateCategoryCommand, ServiceResult<CreateCategoryResponse>>
+public class CreateCategoryCommandHandler(AppDbContext context, IMapper mapper) : IRequestHandler<CreateCategoryCommand, ServiceResult<CreateCategoryResponse>>
 {
     public async Task<ServiceResult<CreateCategoryResponse>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
@@ -21,12 +22,8 @@ public class CreateCategoryCommandHandler(AppDbContext context) : IRequestHandle
         }
 
         // kullanicinin gonderdigi isimde bir kategori yoksa yeni kategori olusturuyoruz
-        var category = new Category
-        {
-            Name = request.Name,
-            Id = NewId.NextSequentialGuid() // indexlemesi daha performansli olmasi adina bunu kullaniyoruz
-        };
-
+        var category = mapper.Map<Category>(request);
+        category.Id = NewId.NextSequentialGuid();
 
         await context.Categories.AddAsync(category, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);

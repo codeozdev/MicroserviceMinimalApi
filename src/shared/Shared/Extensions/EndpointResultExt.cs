@@ -29,6 +29,7 @@ public static class EndpointResultExt
     }
 }
 
+// STATUS KODLARINI DURUMA GORE DONDUREN SINIFTIR
 
 // result nesnesi yani ServiceResult sinifinin nesnesi icindeki Status propunun degerine gore hangi durum kodunun donmesi gerektigini belirliyoruz.
 // bunu da CreateCategoryGroupItemEndpoint.cs dosyasindaki return result.ToResult(); ile kullandik

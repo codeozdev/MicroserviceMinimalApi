@@ -15,6 +15,11 @@ public static class CommonService
         service.AddFluentValidationAutoValidation();
         service.AddValidatorsFromAssemblyContaining(assembly);
 
+        // Mapper
+        service.AddAutoMapper(assembly);
+
         return service;
     }
 }
+
+// SHARED'IN EXTENSIONS SINIFIDIR

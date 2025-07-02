@@ -43,3 +43,6 @@ public class ValidationFilter<T> : IEndpointFilter
 // endpointimize girmeden once filter devreye girebilir veya endpointimizden ciktiktan sonra filter devreye girebilir.
 
 // CreateCategoryEndpoint.cs ekledik ve filterimiz tum category endpointlerine uygulanmis oldu. minimal api olmasaydi direk kendisi devreye girecekti.
+
+
+// FluentValidation kullanicinin yani input ile alakali dogrulamalar oldugu icin sadece Post, Put gibi endpointlerde kullanilir.
