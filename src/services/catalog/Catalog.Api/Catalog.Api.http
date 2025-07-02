@@ -1,6 +1,12 @@
-@Catalog.Api_HostAddress = http://localhost:5188
+@baseAddress = http://localhost:5188
 
-GET {{Catalog.Api_HostAddress}}/weatherforecast/
+GET {{baseAddress}}/api/categories
 Accept: application/json
-
+###
+POST {{baseAddress}}/api/categories
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "New Kalem"
+}
 ###
