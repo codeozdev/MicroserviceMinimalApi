@@ -1,10 +1,18 @@
-﻿using Refit;
+﻿using MediatR;
+using Refit;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails; // ItemGroup kismina FrameworkReference kismini ekledik
 
 namespace Shared;
+
+// Qury veya Command kisminda daha kisa yazmak adina bunlari tanimladik  
+// IRequest<ServiceResult<CreateCategoryResponse>>; boyle uzun uzun yazmak yerine IRequestByServiceResult<CreateCategoryResponse> olarak yazacagiz
+public interface IRequestByServiceResult<T> : IRequest<ServiceResult<T>>; // generic versiyonu
+
+public interface IRequestByServiceResult : IRequest<ServiceResult>;      // non-generic versiyonu
+
 
 public class ServiceResult
 {
