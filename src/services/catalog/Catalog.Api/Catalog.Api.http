@@ -1,6 +1,10 @@
 @baseAddress = http://localhost:5188
+@categoryId=08ddb901-9d9b-5cfc-345a-607b709e0000
 
 GET {{baseAddress}}/api/categories
+Accept: application/json
+###
+GET {{baseAddress}}/api/categories/{{categoryId}}
 Accept: application/json
 ###
 POST {{baseAddress}}/api/categories
