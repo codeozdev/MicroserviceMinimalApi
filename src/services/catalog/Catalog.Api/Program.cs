@@ -1,5 +1,6 @@
 using Catalog.Api;
 using Catalog.Api.Features.Categories;
+using Catalog.Api.Features.Courses;
 using Catalog.Api.Options;
 using Catalog.Api.Repositories;
 using Scalar.AspNetCore;
@@ -25,6 +26,7 @@ var app = builder.Build();
 
 // Group endpoints
 app.AddCategoryGroupEndpointExt();
+app.AddCourseGroupEndpointExt();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

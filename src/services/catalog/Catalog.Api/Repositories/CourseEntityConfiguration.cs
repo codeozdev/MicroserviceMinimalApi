@@ -17,7 +17,7 @@ public class CourseEntityConfiguration : IEntityTypeConfiguration<Course>
         builder.Property(x => x.CreatedDate).HasElementName("createdDate");
         builder.Property(x => x.UserId).HasElementName("userId");
         builder.Property(x => x.CategoryId).HasElementName("categoryId");
-        builder.Property(x => x.Picture).HasElementName("picture");
+        builder.Property(x => x.ImageUrl).HasElementName("imageurl").HasMaxLength(200);
         builder.Ignore(x => x.Category);  // navigation propertyler alan olamazlar bunları mongodb kullanırken elle kapatmamız gerekiyor (ilişkisel veritabanlarında otomatik algılar)
 
 

@@ -14,3 +14,14 @@ Content-Type: application/json
   "name": "New Kalem"
 }
 ###
+POST {{baseAddress}}/api/courses
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "New Kalem",
+  "description": "Kalem kursu",
+  "price": 100.0,
+  "imageUrl": "https://example.com/image.jpg",
+  "categoryId": "{{categoryId}}"
+}
+###
