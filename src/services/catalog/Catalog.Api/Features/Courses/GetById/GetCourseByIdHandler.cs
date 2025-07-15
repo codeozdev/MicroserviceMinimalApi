@@ -11,7 +11,7 @@ namespace Catalog.Api.Features.Courses.GetById
     {
         public async Task<ServiceResult<CourseDto>> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
         {
-            var hasCourse = await context.Courses.FirstOrDefaultAsync(cancellationToken: cancellationToken);
+            var hasCourse = await context.Courses.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (hasCourse is null)
             {

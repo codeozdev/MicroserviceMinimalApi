@@ -1,6 +1,6 @@
 @baseAddress = http://localhost:5188
-@categoryId=08ddb914-da6c-9453-345a-607b709e0000
-@courseId=08ddc39e-54f4-f227-345a-607b709e0000
+@categoryId=08ddc3b5-e399-dfd3-345a-607b709e0000
+@courseId=08ddc3b6-3b3b-1b30-345a-607b709e0000
 
 GET {{baseAddress}}/api/categories
 Accept: application/json
@@ -12,16 +12,16 @@ POST {{baseAddress}}/api/categories
 Accept: application/json
 Content-Type: application/json
 {
-  "name": "New Kalem"
+  "name": "telefon"
 }
 ###
 POST {{baseAddress}}/api/courses
 Accept: application/json
 Content-Type: application/json
 {
-  "name": "20256 New Kalem",
-  "description": "Kalem kursu",
-  "price": 100.0,
+  "name": "Iphone SE",
+  "description": "En kucuk telefon",
+  "price": 500,
   "imageUrl": "https://example.com/image.jpg",
   "categoryId": "{{categoryId}}"
 }
@@ -31,4 +31,16 @@ Accept: application/json
 ###
 GET {{baseAddress}}/api/courses/{{courseId}}
 Accept: application/json
+###
+PUT {{baseAddress}}/api/courses
+Accept: application/json
+Content-Type: application/json
+{
+  "Id": "{{courseId}}",
+  "name": "Iphone 1",
+  "description": "2026 yilinda piyasa surulecek telefon",
+  "price": 44.0,
+  "imageUrl": "https://example.com/image.jpg",
+  "categoryId": "{{categoryId}}"
+}
 ###
