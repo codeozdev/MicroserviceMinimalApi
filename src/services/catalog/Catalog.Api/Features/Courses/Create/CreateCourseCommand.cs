@@ -7,5 +7,6 @@ namespace Catalog.Api.Features.Courses.Create
         string Description,
         decimal Price,
         string? ImageUrl,
-        Guid CategoryId) : IRequestByServiceResult<CreateCourseResponse>;
+        Guid CategoryId
+    ) : IRequestByServiceResult<CreateCourseResponse>;
 }

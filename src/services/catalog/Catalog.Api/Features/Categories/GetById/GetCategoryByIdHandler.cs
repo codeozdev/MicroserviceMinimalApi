@@ -4,7 +4,7 @@ using Catalog.Api.Repositories;
 using MediatR;
 using Shared;
 
-namespace Catalog.Api.Features.Categories.GetAll.GetById;
+namespace Catalog.Api.Features.Categories.GetById;
 
 public class GetCategoryByIdHandler(AppDbContext context, IMapper mapper) : IRequestHandler<GetCategoryByIdQuery, ServiceResult<CategoryDto>>
 {

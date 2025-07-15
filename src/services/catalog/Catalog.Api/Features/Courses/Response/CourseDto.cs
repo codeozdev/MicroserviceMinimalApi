@@ -1,4 +1,6 @@
-﻿namespace Catalog.Api.Features.Courses.Response
+﻿using Catalog.Api.Features.Categories.Response;
+
+namespace Catalog.Api.Features.Courses.Response
 {
     public record CourseDto(
         Guid Id,
@@ -6,7 +8,7 @@
         string Description,
         decimal Price,
         string ImageUrl,
-        string Category,
+        CategoryDto Category,
         FeatureDto Feature
     );
 }

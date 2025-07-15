@@ -1,5 +1,6 @@
 @baseAddress = http://localhost:5188
-@categoryId=08ddb901-9d9b-5cfc-345a-607b709e0000
+@categoryId=08ddb914-da6c-9453-345a-607b709e0000
+@courseId=08ddc39e-54f4-f227-345a-607b709e0000
 
 GET {{baseAddress}}/api/categories
 Accept: application/json
@@ -18,7 +19,7 @@ POST {{baseAddress}}/api/courses
 Accept: application/json
 Content-Type: application/json
 {
-  "name": "New Kalem",
+  "name": "20256 New Kalem",
   "description": "Kalem kursu",
   "price": 100.0,
   "imageUrl": "https://example.com/image.jpg",
@@ -26,5 +27,8 @@ Content-Type: application/json
 }
 ###
 GET {{baseAddress}}/api/courses
+Accept: application/json
+###
+GET {{baseAddress}}/api/courses/{{courseId}}
 Accept: application/json
 ###
