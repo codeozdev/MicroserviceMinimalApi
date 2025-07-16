@@ -35,3 +35,6 @@ namespace Catalog.Api.Features.Courses.Update
         }
     }
 }
+
+
+// mapper kullanmadik fakat istersek kullanabiliriz

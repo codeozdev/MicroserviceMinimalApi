@@ -2,7 +2,6 @@
 using Catalog.Api.Features.Courses.Response;
 using Catalog.Api.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Shared;
 
 namespace Catalog.Api.Features.Courses.GetById
@@ -11,7 +10,7 @@ namespace Catalog.Api.Features.Courses.GetById
     {
         public async Task<ServiceResult<CourseDto>> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
         {
-            var hasCourse = await context.Courses.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var hasCourse = await context.Courses.FindAsync([request.Id], cancellationToken);
 
             if (hasCourse is null)
             {

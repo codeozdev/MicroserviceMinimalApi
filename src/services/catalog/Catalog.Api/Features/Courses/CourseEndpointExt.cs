@@ -1,4 +1,5 @@
 ﻿using Catalog.Api.Features.Courses.Create;
+using Catalog.Api.Features.Courses.Delete;
 using Catalog.Api.Features.Courses.GetAll;
 using Catalog.Api.Features.Courses.GetById;
 using Catalog.Api.Features.Courses.Update;
@@ -13,7 +14,8 @@ namespace Catalog.Api.Features.Courses
                 .CreateCourseGroupItemEndpoint()
                 .GetAllCoursesGroupItemEndpoint()
                 .GetByIdCourseGroupItemEndpoint()
-                .UpdateCourseGroupItemEndpoint();
+                .UpdateCourseGroupItemEndpoint()
+                .DeleteCourseGroupItemEndpoint();
         }
     }
 }
