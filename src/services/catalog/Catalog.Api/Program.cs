@@ -24,6 +24,13 @@ builder.Services.AddCommonServiceExt(typeof(CatelogAssembly));
 
 var app = builder.Build();
 
+// Seed data -> continuewith ile olumlu veya olumsuz sonuclari yakalayabiliriz bu yuzden kullandik
+app.AddSeedDataExt().ContinueWith(x =>
+{
+    Console.WriteLine(x.IsFaulted ? x.Exception?.Message : "Seed data has been saved successfully");
+});
+
+
 // Group endpoints
 app.AddCategoryGroupEndpointExt();
 app.AddCourseGroupEndpointExt();
