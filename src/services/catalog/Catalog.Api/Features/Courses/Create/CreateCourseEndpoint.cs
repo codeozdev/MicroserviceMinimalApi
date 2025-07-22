@@ -15,6 +15,7 @@ namespace Catalog.Api.Features.Courses.Create
                     var result = await mediator.Send(command);
                     return result.ToGenericResult();
                 })
+                .MapToApiVersion(1, 0)
                 .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>()
                 .WithName("CreateCourse")
                 .Produces<CreateCourseResponse>(StatusCodes.Status201Created)

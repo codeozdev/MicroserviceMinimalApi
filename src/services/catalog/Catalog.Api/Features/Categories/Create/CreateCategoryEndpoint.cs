@@ -13,7 +13,7 @@ public static class CreateCategoryEndpoint
         {
             var result = await mediator.Send(command);
             return result.ToGenericResult();
-        }).AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
+        }).AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>().MapToApiVersion(1, 0);
 
 
         return group;

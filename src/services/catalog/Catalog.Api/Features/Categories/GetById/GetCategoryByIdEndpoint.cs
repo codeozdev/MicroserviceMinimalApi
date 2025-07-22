@@ -12,9 +12,12 @@ public static class GetCourseByIdEndpoint
             var result = await mediator.Send(new GetCategoryByIdQuery(id));
             return result.ToGenericResult();
 
-        });
+        }).MapToApiVersion(1, 0);
 
 
         return group;
     }
 }
+
+
+// api/v1.0/categories/{id:guid} olarak erisebiliriz artik

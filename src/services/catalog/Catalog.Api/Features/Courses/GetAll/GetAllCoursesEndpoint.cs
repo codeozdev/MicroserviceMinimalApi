@@ -11,7 +11,7 @@ namespace Catalog.Api.Features.Courses.GetAll
                 {
                     var result = await mediator.Send(new GetAllCoursesQuery());
                     return result.ToGenericResult();
-                }).WithName("GetAllCourse");
+                }).WithName("GetAllCourse").MapToApiVersion(1, 0);
 
             return group;
         }

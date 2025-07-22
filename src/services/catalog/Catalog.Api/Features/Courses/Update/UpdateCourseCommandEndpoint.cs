@@ -12,7 +12,7 @@ namespace Catalog.Api.Features.Courses.Update
             {
                 var result = await mediator.Send(command);
                 return result.ToGenericResult();
-            }).AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>().WithName("UpdateCourse");
+            }).AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>().WithName("UpdateCourse").MapToApiVersion(1, 0);
 
 
             return group;

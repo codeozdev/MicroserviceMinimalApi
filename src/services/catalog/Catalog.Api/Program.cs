@@ -21,6 +21,9 @@ builder.Services.AddRepositoriesExt();
 builder.Services.AddCommonServiceExt(typeof(CatelogAssembly));
 
 
+// Versiyonlama icin -> Shared/VersioningExt
+builder.Services.AddVersioningExt();
+
 
 var app = builder.Build();
 
@@ -32,8 +35,8 @@ app.AddSeedDataExt().ContinueWith(x =>
 
 
 // Group endpoints
-app.AddCategoryGroupEndpointExt();
-app.AddCourseGroupEndpointExt();
+app.AddCategoryGroupEndpointExt(app.AddVersionSetExt());
+app.AddCourseGroupEndpointExt(app.AddVersionSetExt());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

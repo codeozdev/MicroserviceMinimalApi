@@ -11,7 +11,7 @@ namespace Catalog.Api.Features.Courses.Delete
             {
                 var result = await mediator.Send(new DeleteCourseCommand(id));
                 return result.ToGenericResult();
-            }).WithName("DeleteCourse");
+            }).WithName("DeleteCourse").MapToApiVersion(1, 0);
 
 
             return group;

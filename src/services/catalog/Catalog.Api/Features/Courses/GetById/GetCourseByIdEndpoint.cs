@@ -12,7 +12,7 @@ public static class GetCourseByIdEndpoint
             var result = await mediator.Send(new GetCourseByIdQuery(id));
             return result.ToGenericResult();
 
-        });
+        }).MapToApiVersion(1, 0);
 
 
         return group;

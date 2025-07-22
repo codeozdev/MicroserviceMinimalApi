@@ -11,7 +11,7 @@ public static class GetAllCategoryEndpoint
         {
             var result = await mediator.Send(new GetAllCategoryQuery());  // kullaniciya hicbir sey gostermiyeceksek bile bos bir query gondermek zorundayiz (MediatR'in ozelligi)
             return result.ToGenericResult();
-        });
+        }).MapToApiVersion(1, 0);
 
         return group;
     }
