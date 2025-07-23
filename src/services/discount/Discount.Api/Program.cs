@@ -1,4 +1,6 @@
 using Discount.Api;
+using Discount.Api.Options;
+using Discount.Api.Repositories;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
@@ -7,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+
+// mongodb baðlantý ayarlarý
+builder.Services.AddOptionsExt();
+builder.Services.AddRepositoriesExt();
 
 
 // Shared -> FluentValidation and MediatR ayrica Filterin devreye girmesini saglar
