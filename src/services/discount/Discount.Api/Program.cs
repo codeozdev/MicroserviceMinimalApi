@@ -37,3 +37,4 @@ app.Run();
 
 
 
+// discount endpointlerini yonetim belirler ve uygular
