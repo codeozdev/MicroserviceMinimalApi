@@ -1,4 +1,5 @@
 using Discount.Api;
+using Discount.Api.Features.Discounts;
 using Discount.Api.Options;
 using Discount.Api.Repositories;
 using Scalar.AspNetCore;
@@ -23,6 +24,9 @@ builder.Services.AddCommonServiceExt(typeof(DiscountAssembly));
 builder.Services.AddVersioningExt();
 
 var app = builder.Build();
+
+// Group endpoints
+app.AddDiscountGroupEndpointExt(app.AddVersionSetExt());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Services;
 
 namespace Shared.Extensions;
 
@@ -17,6 +18,9 @@ public static class CommonService
 
         // Mapper
         service.AddAutoMapper(assembly);
+
+        // fake identity service
+        service.AddScoped<IIdentityService, IdentityServiceFake>();
 
         return service;
     }
