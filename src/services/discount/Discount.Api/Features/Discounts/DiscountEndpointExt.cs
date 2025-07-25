@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning.Builder;
 using Discount.Api.Features.Discounts.Create;
+using Discount.Api.Features.Discounts.GetDiscountByCode;
 
 namespace Discount.Api.Features.Discounts
 {
@@ -9,7 +10,8 @@ namespace Discount.Api.Features.Discounts
         {
             app.MapGroup("api/v{version:apiVersion}/discounts").WithTags("Discounts")
                 .WithApiVersionSet(apiVersionSet)
-                .CreateDiscountGroupItemEndpoint();
+                .CreateDiscountGroupItemEndpoint()
+                .GetDiscountByCodeGroupItemEndpoint();
         }
     }
 }

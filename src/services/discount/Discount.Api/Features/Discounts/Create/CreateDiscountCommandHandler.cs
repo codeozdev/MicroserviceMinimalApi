@@ -24,7 +24,7 @@ namespace Discount.Api.Features.Discounts.Create
             {
                 Id = NewId.NextSequentialGuid(),
                 Code = request.Code,
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow,
                 Rate = request.Rate,
                 Expired = request.Expired,
                 UserId = request.UserId,
