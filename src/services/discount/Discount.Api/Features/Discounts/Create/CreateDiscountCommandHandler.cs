@@ -1,8 +1,10 @@
 ﻿using Discount.Api.Repositories;
 using MassTransit;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shared;
 using Shared.Services;
+using System.Net;
 
 namespace Discount.Api.Features.Discounts.Create
 {
@@ -10,6 +12,14 @@ namespace Discount.Api.Features.Discounts.Create
     {
         public async Task<ServiceResult> Handle(CreateDiscountCommand request, CancellationToken cancellationToken)
         {
+            // daha önce bu id'li kullanıcı code eklemiş ise hata veriyoruz. Neden 400 dönüyoruz çünkü bu kullanıcının bir hatası yani "client" (code ayni olmamali)
+            var hasCodeForUser = await context.Discounts.AnyAsync(x => x.UserId == request.UserId && x.Code == request.Code, cancellationToken: cancellationToken);
+
+            if (hasCodeForUser)
+            {
+                return ServiceResult.Error("Discount code already exists for this user", HttpStatusCode.BadRequest);
+            }
+
             var discount = new Discount()
             {
                 Id = NewId.NextSequentialGuid(),
@@ -17,7 +27,7 @@ namespace Discount.Api.Features.Discounts.Create
                 Created = DateTime.Now,
                 Rate = request.Rate,
                 Expired = request.Expired,
-                UserId = identityService.GetUserId
+                UserId = request.UserId,
             };
 
             await context.Discounts.AddAsync(discount, cancellationToken);

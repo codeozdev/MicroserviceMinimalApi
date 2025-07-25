@@ -7,7 +7,7 @@ namespace Discount.Api.Features.Discounts
     {
         public static void AddDiscountGroupEndpointExt(this WebApplication app, ApiVersionSet apiVersionSet)
         {
-            app.MapGroup("api/v{version:apiVersion}/discount").WithTags("Discounts")
+            app.MapGroup("api/v{version:apiVersion}/discounts").WithTags("Discounts")
                 .WithApiVersionSet(apiVersionSet)
                 .CreateDiscountGroupItemEndpoint();
         }
