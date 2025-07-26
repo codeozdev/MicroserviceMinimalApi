@@ -18,7 +18,7 @@ builder.Services.AddRepositoriesExt();
 
 
 // FluentValidation and MediatR ayrica Filterin devreye girmesini saglar
-builder.Services.AddCommonServiceExt(typeof(CatelogAssembly));
+builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
 
 
 // Versiyonlama icin -> Shared/VersioningExt
