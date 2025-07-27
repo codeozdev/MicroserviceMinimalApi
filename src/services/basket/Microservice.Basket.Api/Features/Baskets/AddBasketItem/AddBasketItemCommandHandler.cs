@@ -3,15 +3,16 @@ using Microservice.Basket.Api.Const;
 using Microservice.Basket.Api.Dto;
 using Microsoft.Extensions.Caching.Distributed;
 using Shared;
+using Shared.Services;
 using System.Text.Json;
 
 namespace Microservice.Basket.Api.Features.Baskets.AddBasketItem;
 
-public class AddBasketItemCommandHandler(IDistributedCache distributedCache) : IRequestHandler<AddBasketItemCommand, ServiceResult>
+public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<AddBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(AddBasketItemCommand request, CancellationToken cancellationToken)
     {
-        Guid userId = Guid.NewGuid();
+        Guid userId = identityService.GetUserId;
         var cacheKey = string.Format(BasketConst.BasketCacheKey, userId); // Kullanıcıya özel cache anahtarı oluşturuluyor -> dinamik olmasini istedigim yeri format methodu otomatik olarak degistiriyor
 
         var basketAsString = await distributedCache.GetStringAsync(cacheKey, token: cancellationToken); // Cache'den mevcut sepet alınır (varsa)

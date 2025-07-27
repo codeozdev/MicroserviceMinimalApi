@@ -1,12 +1,15 @@
 @baseAddress = http://localhost:5128
-
+@courseId = 3fa85f64-5717-4562-b3fc-2c963f66afac
 
 POST {{baseAddress}}/api/v1/baskets/item
 Accept: application/json
 Content-Type: application/json
 {
-  "courseId": "3fa85f64-5717-4562-b3fc-2c963f66afac",
+  "courseId": "{{courseId}}",
   "courseName": "xxx",
   "coursePrice": 10
 }
+###
+DELETE {{baseAddress}}/api/v1/baskets/item/{{courseId}}
+Accept: application/json
 ###
