@@ -1,3 +1,5 @@
-﻿namespace Microservice.Basket.Api.Features.Baskets.AddBasketItem;
+﻿using Shared;
 
-public record AddBasketItemCommand(Guid Id, string CourseName, decimal CoursePrice, string? ImageUrl);
+namespace Microservice.Basket.Api.Features.Baskets.AddBasketItem;
+
+public record AddBasketItemCommand(Guid Id, string CourseName, decimal CoursePrice, string? ImageUrl) : IRequestByServiceResult;
