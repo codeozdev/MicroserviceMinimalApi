@@ -6,7 +6,7 @@ public class AddBasketItemCommandValidator : AbstractValidator<AddBasketItemComm
 {
     public AddBasketItemCommandValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(x => x.CourseId)
             .NotEmpty()
             .WithMessage("Id is required.");
         RuleFor(x => x.CourseName)

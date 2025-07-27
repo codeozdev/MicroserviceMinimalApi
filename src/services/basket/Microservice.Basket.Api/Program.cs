@@ -1,4 +1,5 @@
 using Microservice.Basket.Api;
+using Microservice.Basket.Api.Features.Baskets;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
@@ -10,6 +11,8 @@ builder.Services.AddOpenApi();
 
 
 builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
+builder.Services.AddVersioningExt();
+
 
 // container redise baglantýsý
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -19,6 +22,11 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 
 var app = builder.Build();
+
+
+// Group endpoints
+app.AddBasketGroupEndpointExt(app.AddVersionSetExt());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

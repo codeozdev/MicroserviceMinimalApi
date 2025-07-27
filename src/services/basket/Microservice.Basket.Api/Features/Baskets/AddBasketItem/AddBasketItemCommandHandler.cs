@@ -19,7 +19,7 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache) : I
         BasketDto? currentBasket; // Geçerli sepetin tutulacağı değişken
 
         var newBasketItem = new BasketItemDto( // Yeni eklenecek ürün oluşturuluyor
-            Id: request.Id,
+            Id: request.CourseId,
             Name: request.CourseName,
             ImageUrl: request.ImageUrl ?? string.Empty,
             Price: request.CoursePrice,
@@ -34,7 +34,7 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache) : I
         {
             currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsString); // Var olan sepeti JSON'dan nesye dönüştür
 
-            var existingItem = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.Id); // Sepette aynı ürün var mı kontrol et
+            var existingItem = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.CourseId); // Sepette aynı ürün var mı kontrol et
 
             if (existingItem is not null) // Eğer aynı ürün varsa önce sil, sonra güncel haliyle ekle
             {
