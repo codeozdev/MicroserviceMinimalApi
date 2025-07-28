@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microservice.Basket.Api.Const;
-using Microservice.Basket.Api.Dto;
 using Microsoft.Extensions.Caching.Distributed;
 using Shared;
 using Shared.Services;
@@ -26,16 +25,16 @@ public class DeleteBasketItemCommandHandler(IDistributedCache distributedCache, 
             return ServiceResult.Error("Basket not found", HttpStatusCode.NotFound);
         }
 
-        var currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsString); // Cache'deki JSON, C# nesnesine dönüştürülür (yukardaki if koşuluna girmezse demek ki bir basket var ve onu nesneye çeviriyoruz)
+        var currentBasket = JsonSerializer.Deserialize<Data.Basket>(basketAsString); // Cache'deki JSON, C# nesnesine dönüştürülür (yukardaki if koşuluna girmezse demek ki bir basket var ve onu nesneye çeviriyoruz)
 
-        var basketItemToDelete = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.Id); // Silinmek istenen ürün bulunur
+        var basketItemToDelete = currentBasket!.Items.FirstOrDefault(x => x.Id == request.Id); // Silinmek istenen ürün bulunur
 
         if (basketItemToDelete is null) // Ürün sepette yoksa
         {
             return ServiceResult.Error("Basket item not found", HttpStatusCode.NotFound);
         }
 
-        currentBasket.BasketItems.Remove(basketItemToDelete); // Ürün sepetten çıkarılır
+        currentBasket.Items.Remove(basketItemToDelete); // Ürün sepetten çıkarılır
         basketAsString = JsonSerializer.Serialize(currentBasket); // Güncellenmiş sepet tekrar JSON'a çevrilir
         await distributedCache.SetStringAsync(cacheKey, basketAsString, token: cancellationToken); // Yeni sepet cache'e yazılır
         return ServiceResult.SuccessAsNoContent(); // Başarılı yanıt döndürülür (204 No Content)

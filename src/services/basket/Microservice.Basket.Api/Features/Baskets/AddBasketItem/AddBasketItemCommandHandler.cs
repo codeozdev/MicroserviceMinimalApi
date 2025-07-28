@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microservice.Basket.Api.Const;
-using Microservice.Basket.Api.Dto;
+using Microservice.Basket.Api.Data;
 using Microsoft.Extensions.Caching.Distributed;
 using Shared;
 using Shared.Services;
@@ -17,33 +17,33 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IId
 
         var basketAsString = await distributedCache.GetStringAsync(cacheKey, token: cancellationToken); // Cache'den mevcut sepet alınır (varsa)
 
-        BasketDto? currentBasket; // Geçerli sepetin tutulacağı değişken
+        Data.Basket? currentBasket; // Geçerli sepetin tutulacağı değişken
 
-        var newBasketItem = new BasketItemDto( // Yeni eklenecek ürün oluşturuluyor
-            Id: request.CourseId,
-            Name: request.CourseName,
-            ImageUrl: request.ImageUrl ?? string.Empty,
-            Price: request.CoursePrice,
-            PriceByApplyDiscountRate: null // İndirim oranı uygulanmadı
+        var newBasketItem = new BasketItem( // Yeni eklenecek ürün oluşturuluyor
+            id: request.CourseId,
+            name: request.CourseName,
+            imageUrl: request.ImageUrl ?? string.Empty,
+            price: request.CoursePrice,
+            priceByApplyDiscountRate: null // İndirim oranı uygulanmadı
         );
 
         if (string.IsNullOrEmpty(basketAsString)) // Sepet daha önce oluşturulmamışsa
         {
-            currentBasket = new BasketDto(userId, [newBasketItem]); // Yeni bir sepet oluştur ve ürünü içine ekle
+            currentBasket = new Data.Basket(userId, [newBasketItem]); // Yeni bir sepet oluştur ve ürünü içine ekle
         }
         else
         {
-            currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsString); // Var olan sepeti JSON'dan nesye dönüştür
+            currentBasket = JsonSerializer.Deserialize<Data.Basket>(basketAsString); // Var olan sepeti JSON'dan nesye dönüştür
 
-            var existingItem = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.CourseId); // Sepette aynı ürün var mı kontrol et
+            var existingItem = currentBasket!.Items.FirstOrDefault(x => x.Id == request.CourseId); // Sepette aynı ürün var mı kontrol et
 
             if (existingItem is not null) // Eğer aynı ürün varsa önce sil, sonra güncel haliyle ekle
             {
-                currentBasket.BasketItems.Remove(existingItem);
+                currentBasket.Items.Remove(existingItem);
             }
 
             // Aynı ürün yoksa doğrudan ekle
-            currentBasket.BasketItems.Add(newBasketItem);
+            currentBasket.Items.Add(newBasketItem);
         }
 
         basketAsString = JsonSerializer.Serialize(currentBasket); // Sepeti tekrar JSON'a çevir

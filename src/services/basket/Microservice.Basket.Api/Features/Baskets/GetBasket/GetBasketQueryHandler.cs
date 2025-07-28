@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microservice.Basket.Api.Const;
 using Microservice.Basket.Api.Dto;
 using Microsoft.Extensions.Caching.Distributed;
@@ -13,7 +14,7 @@ namespace Microservice.Basket.Api.Features.Baskets.GetBasket;
 /// <summary>
 /// Kullanıcıya ait sepeti getirir. Sepet bulunamazsa uygun hata mesajı döner.
 /// </summary>
-public class GetBasketQueryHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
+public class GetBasketQueryHandler(IDistributedCache distributedCache, IIdentityService identityService, IMapper mapper) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
 {
     public async Task<ServiceResult<BasketDto>> Handle(GetBasketQuery request, CancellationToken cancellationToken)
     {
@@ -26,7 +27,10 @@ public class GetBasketQueryHandler(IDistributedCache distributedCache, IIdentity
             return ServiceResult<BasketDto>.Error("Basket not found", HttpStatusCode.NotFound);
         }
 
-        var basket = JsonSerializer.Deserialize<BasketDto>(basketAsString)!; // JSON string, BasketDto nesnesine çevrilir (deserialize edilir)
-        return ServiceResult<BasketDto>.SuccessAsOk(basket); // Sepet başarıyla bulunduysa, 200 OK ile birlikte response döndürülür
+        var basket = JsonSerializer.Deserialize<Data.Basket>(basketAsString)!; // JSON string, BasketDto nesnesine çevrilir (deserialize edilir)
+        var basketDto = mapper.Map<BasketDto>(basket);
+
+
+        return ServiceResult<BasketDto>.SuccessAsOk(basketDto); // Sepet başarıyla bulunduysa, 200 OK ile birlikte response döndürülür
     }
 }
