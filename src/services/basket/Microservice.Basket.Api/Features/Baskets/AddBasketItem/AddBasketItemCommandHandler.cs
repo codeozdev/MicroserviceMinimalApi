@@ -44,6 +44,7 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IId
 
             // Aynı ürün yoksa doğrudan ekle
             currentBasket.Items.Add(newBasketItem);
+            currentBasket.ApplyAvailableDiscount();  // Sepetteki ürünlere indirim oranı uygula (varsa) diger eklemelerde de indirim kuponu uygulanmissa indirim oranı uygulanacak
         }
 
         basketAsString = JsonSerializer.Serialize(currentBasket); // Sepeti tekrar JSON'a çevir
