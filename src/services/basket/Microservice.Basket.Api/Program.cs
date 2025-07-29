@@ -9,10 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
 builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
 builder.Services.AddVersioningExt();
-
+builder.Services.AddScoped<BasketService>();
 
 // container redise baglantýsý
 builder.Services.AddStackExchangeRedisCache(options =>

@@ -1,8 +1,5 @@
 ﻿using MediatR;
-using Microservice.Basket.Api.Const;
-using Microsoft.Extensions.Caching.Distributed;
 using Shared;
-using Shared.Services;
 using System.Net;
 using System.Text.Json;
 
@@ -12,13 +9,11 @@ namespace Microservice.Basket.Api.Features.Baskets.DeleteBasketItem;
 /// <summary>
 ///  Kullanıcının sepetinden bir ürün silinir. Sepet ya da ürün bulunamazsa uygun hata mesajı döner. Güncel sepet cache'e tekrar yazılır.
 /// </summary>
-public class DeleteBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<DeleteBasketItemCommand, ServiceResult>
+public class DeleteBasketItemCommandHandler(BasketService basketService) : IRequestHandler<DeleteBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
     {
-        Guid userId = identityService.GetUserId;
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, userId); // Kullanıcıya özel cache anahtarı oluşturuluyor -> dinamik olmasini istedigim yeri format methodu otomatik olarak degistiriyor
-        var basketAsString = await distributedCache.GetStringAsync(cacheKey, token: cancellationToken); // Cache'den mevcut sepet alınır (varsa)
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken); // Cache'den mevcut sepet alınır (varsa)
 
         if (string.IsNullOrEmpty(basketAsString)) // Sepet yoksa, silinecek ürün de yok demektir
         {
@@ -35,8 +30,7 @@ public class DeleteBasketItemCommandHandler(IDistributedCache distributedCache, 
         }
 
         currentBasket.Items.Remove(basketItemToDelete); // Ürün sepetten çıkarılır
-        basketAsString = JsonSerializer.Serialize(currentBasket); // Güncellenmiş sepet tekrar JSON'a çevrilir
-        await distributedCache.SetStringAsync(cacheKey, basketAsString, token: cancellationToken); // Yeni sepet cache'e yazılır
+        await basketService.CreateBasketCacheAsync(currentBasket, cancellationToken);
         return ServiceResult.SuccessAsNoContent(); // Başarılı yanıt döndürülür (204 No Content)
     }
 }

@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using Microservice.Basket.Api.Const;
 using Microservice.Basket.Api.Dto;
-using Microsoft.Extensions.Caching.Distributed;
 using Shared;
-using Shared.Services;
 using System.Net;
 using System.Text.Json;
 
@@ -12,12 +9,11 @@ namespace Microservice.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
 /// <summary>
 ///  Kullanıcının sepetindeki ürüne kupon ile indirim oranı uygular.
 /// </summary>
-public class ApplyDiscountCouponCommandHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
+public class ApplyDiscountCouponCommandHandler(BasketService basketService) : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(ApplyDiscountCouponCommand request, CancellationToken cancellationToken)
     {
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.GetUserId);  // Kullanıcının sepetine özel cache anahtarı oluşturuluyor
-        var basketAsJson = await distributedCache.GetStringAsync(cacheKey, token: cancellationToken); // Redis'ten kullanıcının sepet verisi JSON olarak alınır
+        var basketAsJson = await basketService.GetBasketFromCache(cancellationToken);
 
         if (string.IsNullOrEmpty(basketAsJson)) // Sepet bulunamazsa 404 hatası döndürülür
         {
@@ -32,8 +28,7 @@ public class ApplyDiscountCouponCommandHandler(IDistributedCache distributedCach
         }
 
         basket.ApplyNewDiscount(request.Coupon, request.DiscountRate);                            // Sepete kupon ve indirim oranı uygulanır
-        basketAsJson = JsonSerializer.Serialize(basket);                                          // Güncellenmiş sepet tekrar JSON formatına çevrilir
-        await distributedCache.SetStringAsync(cacheKey, basketAsJson, token: cancellationToken);  // Güncellenmiş sepet Redis'e kaydedilir
+        await basketService.CreateBasketCacheAsync(basket, cancellationToken);
         return ServiceResult.SuccessAsNoContent();                                                // İşlem başarılıysa, 204 No Content döndürülür
     }
 }

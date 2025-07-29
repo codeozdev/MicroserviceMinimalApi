@@ -1,21 +1,16 @@
 ﻿using MediatR;
-using Microservice.Basket.Api.Const;
 using Microservice.Basket.Api.Data;
-using Microsoft.Extensions.Caching.Distributed;
 using Shared;
 using Shared.Services;
 using System.Text.Json;
 
 namespace Microservice.Basket.Api.Features.Baskets.AddBasketItem;
 
-public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<AddBasketItemCommand, ServiceResult>
+public class AddBasketItemCommandHandler(IIdentityService identityService, BasketService basketService) : IRequestHandler<AddBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(AddBasketItemCommand request, CancellationToken cancellationToken)
     {
-        Guid userId = identityService.GetUserId;
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, userId); // Kullanıcıya özel cache anahtarı oluşturuluyor -> dinamik olmasini istedigim yeri format methodu otomatik olarak degistiriyor
-
-        var basketAsString = await distributedCache.GetStringAsync(cacheKey, token: cancellationToken); // Cache'den mevcut sepet alınır (varsa)
+        var basketAsJson = await basketService.GetBasketFromCache(cancellationToken);  // Cache'den mevcut sepet alınır (varsa)
 
         Data.Basket? currentBasket; // Geçerli sepetin tutulacağı değişken
 
@@ -27,13 +22,13 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IId
             priceByApplyDiscountRate: null // İndirim oranı uygulanmadı
         );
 
-        if (string.IsNullOrEmpty(basketAsString)) // Sepet daha önce oluşturulmamışsa
+        if (string.IsNullOrEmpty(basketAsJson)) // Sepet daha önce oluşturulmamışsa
         {
-            currentBasket = new Data.Basket(userId, [newBasketItem]); // Yeni bir sepet oluştur ve ürünü içine ekle
+            currentBasket = new Data.Basket(identityService.GetUserId, [newBasketItem]); // Yeni bir sepet oluştur ve ürünü içine ekle
         }
         else
         {
-            currentBasket = JsonSerializer.Deserialize<Data.Basket>(basketAsString); // Var olan sepeti JSON'dan nesye dönüştür
+            currentBasket = JsonSerializer.Deserialize<Data.Basket>(basketAsJson); // Var olan sepeti JSON'dan nesye dönüştür
 
             var existingItem = currentBasket!.Items.FirstOrDefault(x => x.Id == request.CourseId); // Sepette aynı ürün var mı kontrol et
 
@@ -47,8 +42,7 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IId
             currentBasket.ApplyAvailableDiscount();  // Sepetteki ürünlere indirim oranı uygula (varsa) diger eklemelerde de indirim kuponu uygulanmissa indirim oranı uygulanacak
         }
 
-        basketAsString = JsonSerializer.Serialize(currentBasket); // Sepeti tekrar JSON'a çevir
-        await distributedCache.SetStringAsync(cacheKey, basketAsString, token: cancellationToken); // Cache'e geri yaz
+        await basketService.CreateBasketCacheAsync(currentBasket, cancellationToken); // Sepeti cache'e kaydet
         return ServiceResult.SuccessAsNoContent(); // Başarılı yanıt dön
     }
 }
