@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basket", "basket", "{B22684
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Basket.Api", "src\services\basket\Microservice.Basket.Api\Microservice.Basket.Api.csproj", "{4D7EC70B-42FD-4A7E-A72A-151449337E9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "file", "file", "{38E0E780-4A44-42EA-A5FE-EF52B4A51EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.File.Api", "src\services\file\Microservice.File.Api\Microservice.File.Api.csproj", "{2AF28804-2260-47E5-98E5-057EE15796B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{4D7EC70B-42FD-4A7E-A72A-151449337E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D7EC70B-42FD-4A7E-A72A-151449337E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D7EC70B-42FD-4A7E-A72A-151449337E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF28804-2260-47E5-98E5-057EE15796B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF28804-2260-47E5-98E5-057EE15796B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF28804-2260-47E5-98E5-057EE15796B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF28804-2260-47E5-98E5-057EE15796B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +73,8 @@ Global
 		{8975C95C-1684-4242-9402-E4973DDD338E} = {BD7BFC82-8847-4E58-8D4A-2ACDC2879143}
 		{B2268426-8A87-4F31-8208-F2DD7C7F2CB8} = {7F8095B7-C491-4DF1-A0E1-01CC15CF1802}
 		{4D7EC70B-42FD-4A7E-A72A-151449337E9F} = {B2268426-8A87-4F31-8208-F2DD7C7F2CB8}
+		{38E0E780-4A44-42EA-A5FE-EF52B4A51EB5} = {7F8095B7-C491-4DF1-A0E1-01CC15CF1802}
+		{2AF28804-2260-47E5-98E5-057EE15796B1} = {38E0E780-4A44-42EA-A5FE-EF52B4A51EB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB352614-36C9-4BDE-BDF6-59FACBFD79B4}

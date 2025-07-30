@@ -1,0 +1,3 @@
+- bir database olmayacak resimlerin kaydedilmesi adina bir microservice olacak
+- catalog ile haberlesecek
+- resim yukleme ve silme islemleri olacak
