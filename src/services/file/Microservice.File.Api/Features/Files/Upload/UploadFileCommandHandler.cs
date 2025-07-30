@@ -9,12 +9,14 @@ public class UploadFileCommandHandler(IFileProvider fileProvider) : IRequestHand
 {
     public async Task<ServiceResult<UploadFileCommandResponse>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
-        if (request.File.Length == 0) // Eğer dosya boşsa (0 byte), geçersiz dosya hatası döndür
+        // Eğer dosya boşsa (0 byte), geçersiz dosya hatası döndür
+        if (request.File.Length == 0)
         {
             return ServiceResult<UploadFileCommandResponse>.Error("Invalid file", "The provided file is empty or null", HttpStatusCode.BadRequest);
         }
 
-        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";    // Dosyaya benzersiz bir isim ver (.jpg, .png gibi uzantı korunur)
+        // Dosyaya benzersiz bir isim ver (.jpg, .png gibi uzantı korunur)
+        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";
 
         // Dosyanın kaydedileceği tam yolu oluştur
         // fileProvider.GetFileInfo("files").PhysicalPath => wwwroot/files dizinini döner
