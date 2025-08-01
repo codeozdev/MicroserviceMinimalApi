@@ -1,6 +1,6 @@
 ﻿namespace Microservice.Order.Domain.Entities;
 
-public class BaseEntity<T>
+public class BaseEntity<TEntityId>
 {
-    public T Id { get; set; }
+    public TEntityId Id { get; set; }
 }
