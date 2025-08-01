@@ -1,0 +1,2 @@
+- Bir Order'in birden fazla OrderItem olabilir 
+- Bir Address'in de birden fazla Order'i olabilir
