@@ -1,7 +1,7 @@
 using Microservice.Order.Domain.Entities;
 using System.Linq.Expressions;
 
-namespace Microservice.Order.Application.Contracts;
+namespace Microservice.Order.Application.Contracts.Repositories;
 
 public interface IGenericRepository<TId, TEntity> where TId : struct where TEntity : BaseEntity<TId>
 {
