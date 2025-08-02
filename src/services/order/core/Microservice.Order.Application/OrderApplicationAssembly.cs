@@ -1,3 +1,3 @@
 ﻿namespace Microservice.Order.Application;
 
-public struct OrderApplication;
+public struct OrderApplicationAssembly;

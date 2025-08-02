@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddVersioningExt();
-builder.Services.AddCommonServiceExt(typeof(OrderApplication));
+builder.Services.AddCommonServiceExt(typeof(OrderApplicationAssembly));
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
