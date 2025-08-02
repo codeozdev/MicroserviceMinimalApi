@@ -14,5 +14,6 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.Property(x => x.District).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Line).HasMaxLength(200).IsRequired();
         builder.Property(x => x.ZipCode).HasMaxLength(20).IsRequired();
+        builder.Property(x => x.Street).HasMaxLength(100).IsRequired();
     }
 }

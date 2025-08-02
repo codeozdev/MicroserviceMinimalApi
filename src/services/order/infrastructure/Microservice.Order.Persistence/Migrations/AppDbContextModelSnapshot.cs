@@ -47,7 +47,8 @@ namespace Microservice.Order.Persistence.Migrations
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()

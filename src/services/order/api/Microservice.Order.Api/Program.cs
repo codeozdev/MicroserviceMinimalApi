@@ -1,5 +1,5 @@
-
 using Microservice.Order.Api.Endpoints.Orders;
+using Microservice.Order.Application;
 using Microservice.Order.Application.Contracts.Repositories;
 using Microservice.Order.Application.Contracts.UnitOfWork;
 using Microservice.Order.Persistence;
@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddVersioningExt();
+builder.Services.AddCommonServiceExt(typeof(OrderApplication));
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 var app = builder.Build();
 
@@ -41,6 +43,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-
 app.Run();
-
