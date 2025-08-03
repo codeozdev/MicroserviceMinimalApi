@@ -45,6 +45,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Order.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Order.Persistence", "src\services\order\infrastructure\Microservice.Order.Persistence\Microservice.Order.Persistence.csproj", "{662CE6C9-9953-40A1-8640-D631B52340F2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "payment", "payment", "{E7305959-AE13-4175-8AB1-E9B2B24AF39F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Payment.Api", "src\services\payment\Microservice.Payment.Api\Microservice.Payment.Api.csproj", "{76B9E4B2-8C8D-4A42-A53A-466B818907ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +95,10 @@ Global
 		{662CE6C9-9953-40A1-8640-D631B52340F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{662CE6C9-9953-40A1-8640-D631B52340F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{662CE6C9-9953-40A1-8640-D631B52340F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B9E4B2-8C8D-4A42-A53A-466B818907ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B9E4B2-8C8D-4A42-A53A-466B818907ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B9E4B2-8C8D-4A42-A53A-466B818907ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B9E4B2-8C8D-4A42-A53A-466B818907ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +123,8 @@ Global
 		{A0FC63B4-ADC3-431A-A298-EC623B25572F} = {622F2CEF-BDD2-4A85-8892-A887589A5168}
 		{7645BF94-E88B-4188-A47B-530CD0A84659} = {622F2CEF-BDD2-4A85-8892-A887589A5168}
 		{662CE6C9-9953-40A1-8640-D631B52340F2} = {CD7B520E-9E30-4501-A391-F5279088A2B0}
+		{E7305959-AE13-4175-8AB1-E9B2B24AF39F} = {7F8095B7-C491-4DF1-A0E1-01CC15CF1802}
+		{76B9E4B2-8C8D-4A42-A53A-466B818907ED} = {E7305959-AE13-4175-8AB1-E9B2B24AF39F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB352614-36C9-4BDE-BDF6-59FACBFD79B4}
