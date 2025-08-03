@@ -1,4 +1,6 @@
 using Microservice.Payment.Api;
+using Microservice.Payment.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
@@ -8,6 +10,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddVersioningExt();
 builder.Services.AddCommonServiceExt(typeof(PaymentAssembly));
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseInMemoryDatabase("payment-in-memory-db");
+});
 
 WebApplication app = builder.Build();
 
