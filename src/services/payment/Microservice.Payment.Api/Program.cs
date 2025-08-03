@@ -1,4 +1,5 @@
 using Microservice.Payment.Api;
+using Microservice.Payment.Api.Features.Payments;
 using Microservice.Payment.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 WebApplication app = builder.Build();
+
+// Group endpoints
+app.AddPaymentGroupEndpointExt(app.AddVersionSetExt());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
