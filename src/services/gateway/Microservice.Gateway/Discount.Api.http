@@ -1,7 +1,7 @@
-@baseAddress = http://localhost:5177
+@baseAddress = http://localhost:5070
 @code=ABC123DEF4
 
-POST {{baseAddress}}/api/v1/discounts
+POST {{baseAddress}}/v1/discounts
 Accept: application/json
 Content-Type: application/json
 
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{baseAddress}}/api/v1/discounts/{{code}}
+GET {{baseAddress}}/v1/discounts/{{code}}
 Accept: application/json
 
 ###

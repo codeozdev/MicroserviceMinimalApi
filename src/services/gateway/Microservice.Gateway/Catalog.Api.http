@@ -1,0 +1,65 @@
+@baseAddress = http://localhost:5070
+@categoryId=08ddc8a0-b3ea-f0e8-345a-607b709e0000
+@courseId=08ddc3b5-fd8e-cddf-345a-607b709e0000
+@userId=709e0000-607b-345a-2806-08ddc8a0b410
+
+GET {{baseAddress}}/v1/categories
+Accept: application/json
+
+###
+GET {{baseAddress}}/v1.0/categories/{{categoryId}}
+Accept: application/json
+
+###
+POST {{baseAddress}}/v1/categories
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "telefon"
+}
+
+###
+POST {{baseAddress}}/v1/courses
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Iphone SE",
+  "description": "En kucuk telefon",
+  "price": 500,
+  "imageUrl": "https://example.com/image.jpg",
+  "categoryId": "{{categoryId}}"
+}
+
+###
+GET {{baseAddress}}/v1/courses
+Accept: application/json
+
+###
+GET {{baseAddress}}/v1/courses/{{courseId}}
+Accept: application/json
+
+###
+PUT {{baseAddress}}/v1/courses
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Id": "{{courseId}}",
+  "name": "Iphone 1",
+  "description": "2026 yilinda piyasa surulecek telefon",
+  "price": 44.0,
+  "imageUrl": "https://example.com/image.jpg",
+  "categoryId": "{{categoryId}}"
+}
+
+###
+DELETE {{baseAddress}}/v1/courses/{{courseId}}
+Accept: application/json
+
+###
+###
+GET {{baseAddress}}/v1/courses/user/{{userId}}
+Accept: application/json
+
+###
