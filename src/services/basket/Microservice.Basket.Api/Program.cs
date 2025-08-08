@@ -3,7 +3,7 @@ using Microservice.Basket.Api.Features.Baskets;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -13,14 +13,15 @@ builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
 builder.Services.AddVersioningExt();
 builder.Services.AddScoped<BasketService>();
 
-// container redise baglantýsý
+// container redise baglantï¿½sï¿½
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 
 // Group endpoints
@@ -34,6 +35,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

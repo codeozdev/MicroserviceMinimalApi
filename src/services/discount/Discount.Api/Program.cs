@@ -5,14 +5,14 @@ using Discount.Api.Repositories;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 
-// mongodb baðlantý ayarlarý
+// mongodb baï¿½lantï¿½ ayarlarï¿½
 builder.Services.AddOptionsExt();
 builder.Services.AddRepositoriesExt();
 
@@ -23,7 +23,9 @@ builder.Services.AddCommonServiceExt(typeof(DiscountAssembly));
 // Versiyonlama icin -> Shared/VersioningExt
 builder.Services.AddVersioningExt();
 
-var app = builder.Build();
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
+
+WebApplication app = builder.Build();
 
 // Group endpoints
 app.AddDiscountGroupEndpointExt(app.AddVersionSetExt());
@@ -36,9 +38,10 @@ if (app.Environment.IsDevelopment())
 }
 
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
-
 
 
 // discount endpointlerini yonetim belirler ve uygular

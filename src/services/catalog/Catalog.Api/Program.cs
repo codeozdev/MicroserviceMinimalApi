@@ -6,13 +6,13 @@ using Catalog.Api.Repositories;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// mongodb baðlantý ayarlarý
+// mongodb baï¿½lantï¿½ ayarlarï¿½
 builder.Services.AddOptionsExt();
 builder.Services.AddRepositoriesExt();
 
@@ -24,8 +24,9 @@ builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
 // Versiyonlama icin -> Shared/VersioningExt
 builder.Services.AddVersioningExt();
 
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Seed data -> continuewith ile olumlu veya olumsuz sonuclari yakalayabiliriz bu yuzden kullandik
 app.AddSeedDataExt().ContinueWith(x =>
@@ -44,6 +45,9 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
     app.MapOpenApi();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.Run();

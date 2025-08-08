@@ -4,16 +4,19 @@ using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddCommonServiceExt(typeof(FileAssembly));
 builder.Services.AddVersioningExt();
-builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+builder.Services.AddSingleton<IFileProvider>(
+    new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-var app = builder.Build();
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
+
+WebApplication app = builder.Build();
 
 
 // Group endpoints
@@ -26,8 +29,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseStaticFiles(); // wwwroot klasorunu dis dunyadan eriþilebilir hale getirir
+app.UseStaticFiles(); // wwwroot klasorunu dis dunyadan eriï¿½ilebilir hale getirir
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
-

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Shared.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddOpenApi();
@@ -22,13 +22,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
 builder.Services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Group endpoints
 app.AddOrderGroupEndpointExt(app.AddVersionSetExt());
@@ -40,7 +41,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.Run();
