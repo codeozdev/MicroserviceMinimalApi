@@ -17,6 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("payment-in-memory-db");
 });
 
+// bu microservice bizim yazdigimiz kimlik dogrulama ve yetkilendirme servisini ekler
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
+
 WebApplication app = builder.Build();
 
 // Group endpoints
@@ -29,7 +32,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// siralamasi onemli (middleware)
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.Run();

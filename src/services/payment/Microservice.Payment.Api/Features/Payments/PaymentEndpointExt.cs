@@ -10,6 +10,7 @@ public static class PaymentEndpointExt
     {
         app.MapGroup("api/v{version:apiVersion}/payments").WithTags("payments").WithApiVersionSet(apiVersionSet)
             .CreatePaymentGroupItemEndpoint()
-            .GetAllPaymentsByUserIdGroupItemEndpoint();
+            .GetAllPaymentsByUserIdGroupItemEndpoint()
+            .RequireAuthorization(); // payment endpointlerinin hepsi koruma altina alindi artik token bekliyorlar
     }
 }

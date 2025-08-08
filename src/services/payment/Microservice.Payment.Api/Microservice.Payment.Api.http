@@ -1,9 +1,11 @@
 @baseAddress = http://localhost:5191
+@token = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDcFFuYjJoYjNKaFZuUkliLXNwUzhRLTZHRkdKTlNtOXdrQ0RSZXdwa25jIn0.eyJleHAiOjE3NTQ2OTYzNzAsImlhdCI6MTc1NDY5NjA3MCwianRpIjoiOWUzOGFkOTktMTk0Yy00NzIxLTliYTctNWRiNGI5MmQ3Njk3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy91ZGVteVRlbmFudCIsImF1ZCI6WyJwYXltZW50LmFwaSIsImRpc2NvdW50LmFwaSIsImZpbGUuYXBpIiwiY2F0YWxvZy5hcGkiLCJvcmRlci5hcGkiLCJiYXNrZXQuYXBpIiwiYWNjb3VudCJdLCJzdWIiOiI3MzVmZjExYi0wMWY2LTQ1OWUtOWIzZC1mYmM4YjIxYWRiOTEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ3ZWIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtdWRlbXl0ZW5hbnQiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCBwaG9uZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjE3Mi4xOC4wLjEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtd2ViIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xOC4wLjEiLCJjbGllbnRfaWQiOiJ3ZWIifQ.UYodXXITd5hHI_m7mk-UO6VvsuMDJW0bfzsMV1oWAGyM_6K42gmv7og-ewcrrk50w5uAPvxQD8DxETbEe80xYDSFDjAU7237iV-1vspKCGGTQF57kRtjwDjiOC5a5e1xPmP9vBJJfarr4rLNxebC3JPEtV-7t5It8QX_2aImL6AgzV8m5XL8v8ukWN25BxRtTdZrHgbarT7BXA7EWdAEqh2SBfvXsZ1rbpp9vwAczH0r-6TNC2sIiFgk3_xCLK_MJwz6ZKY2wr58fo8Ds6QMeYqZiqOZHA8Xu-GkNYVPvJduumC3MScNuh5mKM9Ny1LXU_CWEiMDrZFM7D4Jx9x-Rg
 
 ### Create a Payment
 POST {{baseAddress}}/api/v1/payments
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{token}}
 
 {
   "OrderCode": "6657c883-2e9b-43e4-a421-45f9ef25b415",
@@ -11,11 +13,12 @@ Accept: application/json
   "CardHolderName": "John Doe",
   "CardExpirationDate": "12/25",
   "CardSecurityNumber": "123",
-  "Amount": 150.75
+  "Amount": 151.75
 }
 
 ### Get All Payments
 GET {{baseAddress}}/api/v1/payments
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
