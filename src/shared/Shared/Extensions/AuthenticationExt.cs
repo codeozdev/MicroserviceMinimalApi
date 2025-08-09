@@ -86,6 +86,7 @@ public static class AuthenticationExt
                 // Bu politika, "ClientCredentialSchema" isimli özel authentication şemasıyla çalışacak
                 policy.AuthenticationSchemes.Add("ClientCredentialSchema");
 
+
                 // Kimliği doğrulanmış olması gerekiyor
                 policy.RequireAuthenticatedUser();
 

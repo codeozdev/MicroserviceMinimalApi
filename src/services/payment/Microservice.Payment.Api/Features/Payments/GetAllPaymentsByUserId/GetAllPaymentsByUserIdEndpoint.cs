@@ -15,8 +15,7 @@ public static class GetAllPaymentsByUserIdEndpoint
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status200OK)
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
-            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-            .RequireAuthorization("ClientCredential");
+            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError);
 
         return group;
     }

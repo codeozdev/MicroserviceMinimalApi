@@ -15,8 +15,7 @@ public static class CreatePaymentCommandEndpoint
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
-            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-            .RequireAuthorization("Password");
+            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError);
 
         return group;
     }
