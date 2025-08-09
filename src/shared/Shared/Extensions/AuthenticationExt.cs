@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Options;
+using System.Security.Claims;
 
 namespace Shared.Extensions;
 
@@ -29,7 +30,7 @@ public static class AuthenticationExt
             // Token doğrulaması için yetkili kimlik sağlayıcısının adresi (Authority)
             options.Authority = identityOptions.Address;
 
-            // Hedef API’nin kimliği (Audience)
+            // Hedef API'nin kimliği (Audience)
             options.Audience = identityOptions.Audience;
 
             // HTTPS zorunluluğunu devre dışı bırakıyoruz
@@ -45,10 +46,53 @@ public static class AuthenticationExt
                 RoleClaimType = "roles", // Kullanıcının rol bilgisi bu claim key'inden alınır
                 NameClaimType = "preferred_username" // Kullanıcının adı bu claim key'inden alınır
             };
+        }).AddJwtBearer("ClientCredentialSchema", options =>
+        {
+            options.Authority = identityOptions.Address;
+            options.Audience = identityOptions.Audience;
+            options.RequireHttpsMetadata = false;
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true,
+                ValidateIssuer = true,
+                RoleClaimType = "roles",
+                NameClaimType = "preferred_username"
+            };
         });
 
-        // Authorization (yetkilendirme) servisini ekliyoruz
-        services.AddAuthorization();
+        // Yetkilendirme için iki ayrı policy tanımlanıyor:
+        // 1. "Password": JWT Bearer ile doğrulanmış, Email claim'i olan kullanıcılar için.
+        // 2. "ClientCredential": Özel ClientCredentialSchema ile doğrulanmış, client_id claim'i olan istemciler için.
+        services.AddAuthorizationBuilder()
+            // "Password" isminde bir yetkilendirme politikası ekleniyor
+            .AddPolicy("Password", policy =>
+            {
+                // Bu politika, JWT Bearer Authentication şemasıyla çalışacak
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+
+                // Kullanıcının kimliğinin doğrulanmış olması gerekiyor
+                policy.RequireAuthenticatedUser();
+
+                // Kullanıcının token içinde "Email" claim'ine sahip olması gerekiyor
+                policy.RequireClaim(ClaimTypes.Email);
+            })
+
+            // "ClientCredential" isminde ikinci bir yetkilendirme politikası ekleniyor
+            .AddPolicy("ClientCredential", policy =>
+            {
+                // Bu politika, "ClientCredentialSchema" isimli özel authentication şemasıyla çalışacak
+                policy.AuthenticationSchemes.Add("ClientCredentialSchema");
+
+                // Kimliği doğrulanmış olması gerekiyor
+                policy.RequireAuthenticatedUser();
+
+                // Token içinde "client_id" claim'ine sahip olması gerekiyor
+                policy.RequireClaim("client_id");
+            });
+
 
         // IServiceCollection'ı geri döndürüyoruz (method chaining için)
         return services;
