@@ -14,13 +14,20 @@ public class CreatePaymentCommandHandler(AppDbContext context, IIdentityService 
 {
     public async Task<ServiceResult<Guid>> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
+        // kullanicinin bilgilerini aliyoruz
+        Guid userId = idenIdentityService.UserId;
+        string userName = idenIdentityService.UserName;
+        List<string> roles = idenIdentityService.Roles;
+
+
         // Dış ödeme servisi simülasyonu (gerçekte bankaya API çağrısı yapılır)
         var (isSuccess, errorMessage) = await ExternalPaymentProcessAsync(
             request.CardNumber,
             request.CardHolderName,
             request.CardExpirationDate,
             request.CardSecurityNumber,
-            request.Amount);
+            request.Amount
+        );
 
         // Ödeme başarısızsa, hata mesajı ile birlikte bad request döner
         if (!isSuccess)
@@ -28,8 +35,6 @@ public class CreatePaymentCommandHandler(AppDbContext context, IIdentityService 
             return ServiceResult<Guid>.Error("Payment Failed", errorMessage!, HttpStatusCode.BadRequest);
         }
 
-        // Kullanıcının ID'si alınır
-        Guid userId = idenIdentityService.GetUserId;
 
         // Yeni ödeme nesnesi oluşturulur
         Repositories.Payment newPayment = new(userId, request.OrderCode, request.Amount);

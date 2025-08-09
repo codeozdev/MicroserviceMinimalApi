@@ -16,7 +16,7 @@ public class GetAllPaymentsByUserIdQueryHandler(AppDbContext context, IIdentityS
         CancellationToken cancellationToken)
     {
         // Kullanıcının ID'si alınır
-        Guid userId = identityService.GetUserId;
+        Guid userId = identityService.UserId;
 
         // Veritabanında ilgili kullanıcıya ait tüm ödemeler sorgulanır ve response modeline dönüştürülür
         List<GetAllPaymentsByUserIdResponse> payments = await context.Payments

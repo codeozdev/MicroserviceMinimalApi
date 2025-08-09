@@ -19,11 +19,15 @@ public static class CommonService
         // Mapper
         service.AddAutoMapper(assembly);
 
-        // fake identity service
-        service.AddScoped<IIdentityService, IdentityServiceFake>();
+        // real identity service
+        service.AddScoped<IIdentityService, IdentityService>();
 
         return service;
     }
 }
 
 // SHARED'IN EXTENSIONS SINIFIDIR
+
+// service.AddScoped<IIdentityService, IdentityServiceFake>(); bunu direk degistirdigimizde tum kodlarimiz gercek rolere erisebilecek
+// bu sayede kodlarda bozulma olmayacak cunku bizler interface uzerinden haberlesiyoruz
+// interfacein gucu

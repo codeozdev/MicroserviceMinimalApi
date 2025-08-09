@@ -17,7 +17,7 @@ public class GetOrdersQueryHandler(IIdentityService identityService, IOrderRepos
         CancellationToken cancellationToken)
     {
         // Kullanıcının ID'sine göre siparişleri getir
-        List<Domain.Entities.Order> orders = await orderRepository.GetOrderByBuyerId(identityService.GetUserId);
+        List<Domain.Entities.Order> orders = await orderRepository.GetOrderByBuyerId(identityService.UserId);
 
         // Siparişleri DTO'ya dönüştür ve liste haline getir
         List<GetOrdersResponse> response = orders.Select(o =>

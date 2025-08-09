@@ -22,7 +22,7 @@ public class CreateOrderCommandHandler(
         }
 
 
-        Address newAddress = new Address()
+        Address newAddress = new()
         {
             Province = request.Address.Province,
             District = request.Address.District,
@@ -31,11 +31,11 @@ public class CreateOrderCommandHandler(
             Street = request.Address.Street
         };
 
-        Domain.Entities.Order order = Domain.Entities.Order.CreateUnPaidOrder(identityService.GetUserId,
+        Domain.Entities.Order order = Domain.Entities.Order.CreateUnPaidOrder(identityService.UserId,
             request.DiscountRate,
             newAddress.Id);
 
-        foreach (var orderItem in request.Items)
+        foreach (OrderItemDto orderItem in request.Items)
         {
             order.AddOrderItem(orderItem.ProductId, orderItem.ProductName, orderItem.UnitPrice);
         }
@@ -46,7 +46,7 @@ public class CreateOrderCommandHandler(
 
         // Payment işlemleri yapılacak
 
-        var paymentId = Guid.Empty;
+        Guid paymentId = Guid.Empty;
         order.SetPaidStatus(paymentId);
 
         orderRepository.Update(order);

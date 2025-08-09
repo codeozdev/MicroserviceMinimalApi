@@ -9,29 +9,24 @@ public class BasketService(IIdentityService identityService, IDistributedCache d
 {
     private string GetCacheKey()
     {
-        return string.Format(BasketConst.BasketCacheKey, identityService.GetUserId);
+        return string.Format(BasketConst.BasketCacheKey, identityService.UserId);
     }
 
     public async Task<string?> GetBasketFromCache(CancellationToken cancellationToken)
     {
-        return await distributedCache.GetStringAsync(GetCacheKey(), token: cancellationToken);
+        return await distributedCache.GetStringAsync(GetCacheKey(), cancellationToken);
     }
 
     public async Task CreateBasketCacheAsync(Data.Basket basket, CancellationToken cancellationToken)
     {
-        var basketAsString = JsonSerializer.Serialize(basket);
-        await distributedCache.SetStringAsync(GetCacheKey(), basketAsString, token: cancellationToken);
+        string basketAsString = JsonSerializer.Serialize(basket);
+        await distributedCache.SetStringAsync(GetCacheKey(), basketAsString, cancellationToken);
     }
 }
 
 // Basket 65.ders
 // scope yasam ömrü olacak
 // handler içerisinde tekrar eden kodların önüne geçmek adına yardımcı bir servis oluşturuldu
-
-
-
-
-
 /*
 
 ***** GetBasketFromCache *****

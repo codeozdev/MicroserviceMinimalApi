@@ -1,8 +1,10 @@
-﻿namespace Shared.Services
+﻿namespace Shared.Services;
+
+public interface IIdentityService
 {
-    public interface IIdentityService
-    {
-        public Guid GetUserId { get; }
-        public string UserName { get; }
-    }
+    public Guid UserId { get; }
+    public string UserName { get; }
+    List<string> Roles { get; }
 }
+
+// kullaniciya ait extra datalar gerekirse burada tanimlamalarini yapabiliriz

@@ -43,7 +43,7 @@ public static class AuthenticationExt
                 ValidateIssuerSigningKey = true, // Token imza anahtarı doğrulansın
                 ValidateLifetime = true, // Token süresi kontrol edilsin
                 ValidateIssuer = true, // Token'ın hangi issuer'dan geldiği kontrol edilsin
-                RoleClaimType = "roles", // Kullanıcının rol bilgisi bu claim key'inden alınır
+                RoleClaimType = "roles", // realm_access kismindan cikardigimiz alandir bu sayede rollere erisebilecegiz
                 NameClaimType = "preferred_username" // Kullanıcının adı bu claim key'inden alınır
             };
         }).AddJwtBearer("ClientCredentialSchema", options =>
@@ -58,7 +58,7 @@ public static class AuthenticationExt
                 ValidateIssuerSigningKey = true,
                 ValidateLifetime = true,
                 ValidateIssuer = true,
-                RoleClaimType = "roles",
+                RoleClaimType = "roles", // realm_access kismindan cikardigimiz alandir bu sayede rollere erisebilecegiz
                 NameClaimType = "preferred_username"
             };
         });
